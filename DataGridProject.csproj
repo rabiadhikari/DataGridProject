@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\Data_Element.cs" />
+    <Compile Include="Models\Data_WorksetGroup.cs" />
     <Compile Include="ViewModels\WorksetsViewModel.cs" />
     <Page Include="Assets\PlusMinusExpanderStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -110,6 +111,14 @@
     <Resource Include="Assets\open.png" />
     <Resource Include="Assets\open_neonglow.png" />
     <Resource Include="Assets\open_plasticwrap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Prism.Core">
+      <Version>7.2.0.1422</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Wpf">
+      <Version>7.2.0.1422</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

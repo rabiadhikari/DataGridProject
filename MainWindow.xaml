@@ -4,76 +4,30 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DataGridProject"
+        d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=msa:WorksetsViewModel}"
         xmlns:msa ="clr-namespace:DataGridProject.ViewModels"
         xmlns:scm ="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="800">
     <Window.Resources>
-        <msa:WorksetsViewModel x:Key="objects" />
         <CollectionViewSource x:Key="RevitElements" Source="{Binding ObjectsCollection}">
             <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="WorksetId" />
                 <PropertyGroupDescription PropertyName="Category" />
             </CollectionViewSource.GroupDescriptions>
-            <!--<CollectionViewSource.SortDescriptions>
+            <CollectionViewSource.SortDescriptions>
                 <scm:SortDescription PropertyName ="ElementType" />
-            </CollectionViewSource.SortDescriptions>-->
+            </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
     </Window.Resources>
-    <Grid>
-        <DataGrid x:Name="ObjectsCollection" ItemsSource="{Binding Source={StaticResource RevitElements}}" CanUserAddRows="False" Margin="0,0,0,0"
-                  AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridCheckBoxColumn Header="Select" Binding="{Binding Path=IsSelected}"/>
-                <DataGridTextColumn Header="Element Id" Binding="{Binding Path=Id}"/>
-                <DataGridTextColumn Header="Element Name" Binding="{Binding Path=Name}"/>
-                <DataGridTemplateColumn Header="Workset">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Path=WorksetId}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                    <DataGridTemplateColumn.CellEditingTemplate>
-                        <DataTemplate>
-                            <ComboBox ItemsSource="{Binding XPath=Worksets}" SelectedItem="{Binding Path=Worksets[1]}">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Path=Worksets[1]}"/>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellEditingTemplate>
-                </DataGridTemplateColumn>
-
-            </DataGrid.Columns>
-            <DataGrid.GroupStyle>
-                 <!--Style for groups at top level.--> 
-                <GroupStyle>
-                    <GroupStyle.ContainerStyle>
-                        <Style TargetType="{x:Type GroupItem}">
-                            <Setter Property="Margin" Value="0,0,0,5" />
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type GroupItem}">
-                                        <Expander IsExpanded="False" BorderThickness="1,1,1,5">
-                                            <Expander.Header>
-                                                <StackPanel>
-                                                    <TextBlock FontWeight="Bold" Text="{Binding Mode=OneWay, Source={StaticResource RevitElements}}" />
-                                                    <TextBlock FontWeight="Bold" Text="{Binding Path=ItemCount}" />
-                                                </StackPanel>
-                                            </Expander.Header>
-                                            <Expander.Content>
-                                                <ItemsPresenter />
-                                            </Expander.Content>
-                                        </Expander>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </GroupStyle.ContainerStyle>
-                </GroupStyle>
-            </DataGrid.GroupStyle>
-        </DataGrid>
-    </Grid>
+    <Border Padding="5">
+        <TreeView ItemsSource="{Binding Source={StaticResource RevitElements}}" Margin="0,0,0,5">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Items}">
+                    <StackPanel>
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+    </Border>
 </Window>
